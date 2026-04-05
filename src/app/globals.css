@@ -1,26 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Onest:wght@400;500;600;700&family=Red+Hat+Text:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf9f7;
+  --foreground: #242220;
+  --primary: rgb(46, 147, 111);
+  --primary-light: #d6f2da;
+  --forest: rgb(46, 147, 111);
+  --frozen: rgb(140, 176, 178);
+  --pink-lemonade: rgb(214, 144, 179);
+  --passion-fruit: rgb(235, 135, 113);
+  --berry: rgb(149, 107, 173);
+  --sand: rgb(198, 166, 115);
+  --stone: rgb(165, 137, 121);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-forest: var(--forest);
+  --color-frozen: var(--frozen);
+  --color-pink-lemonade: var(--pink-lemonade);
+  --color-passion-fruit: var(--passion-fruit);
+  --color-berry: var(--berry);
+  --color-sand: var(--sand);
+  --color-stone: var(--stone);
+  --font-sans: 'Onest', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-accent: 'Red Hat Text', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Onest', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--stone);
+  border-radius: 4px;
+}
+
+/* Coming Soon badge pulse */
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.animate-pulse-badge {
+  animation: pulse-badge 2s ease-in-out infinite;
 }

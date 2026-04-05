@@ -93,31 +93,31 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-16 md:py-24 bg-[var(--background)] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection className="text-center mb-16">
-          <span className="inline-block px-3 py-1 rounded-full bg-[var(--passion-fruit)]/15 text-[var(--passion-fruit)] text-xs font-bold uppercase tracking-wider mb-4">
+    <section id="testimonials" className="py-[72px] md:py-[100px] bg-[var(--background)] overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+        <AnimatedSection className="text-center mb-14">
+          <span className="inline-block px-3.5 py-[5px] rounded-full bg-[var(--passion-fruit)]/[0.1] text-[var(--passion-fruit)] text-[11px] font-bold uppercase tracking-[0.08em] mb-5">
             Testimonials
           </span>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold"
+            className="text-[30px] md:text-[38px] lg:text-[44px] font-extrabold tracking-[-0.025em] leading-[1.1] text-[var(--foreground)]"
             style={{ fontFamily: "var(--font-heading)" }}
           >
             What Our Patients Say
           </h2>
-          <p className="mt-4 text-lg text-[var(--foreground)]/50 max-w-2xl mx-auto">
+          <p className="mt-4 text-[17px] text-[var(--foreground)]/50 max-w-[560px] mx-auto font-medium leading-[1.6]">
             Real stories from real patients who transformed their health with Trimora.
           </p>
         </AnimatedSection>
 
         {/* Scrolling testimonial rows */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           {/* Row 1 - scrolls left */}
           <div className="relative">
             <motion.div
-              animate={{ x: [0, -1500] }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              className="flex gap-6"
+              animate={{ x: [0, -2280] }}
+              transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+              className="flex gap-5"
             >
               {[...testimonials.slice(0, 6), ...testimonials.slice(0, 6)].map(
                 (t, i) => (
@@ -130,9 +130,9 @@ export default function Testimonials() {
           {/* Row 2 - scrolls right */}
           <div className="relative">
             <motion.div
-              animate={{ x: [-1500, 0] }}
-              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-              className="flex gap-6"
+              animate={{ x: [-2280, 0] }}
+              transition={{ duration: 55, repeat: Infinity, ease: "linear" }}
+              className="flex gap-5"
             >
               {[...testimonials.slice(6), ...testimonials.slice(6)].map(
                 (t, i) => (
@@ -153,32 +153,33 @@ function TestimonialCard({
   testimonial: (typeof testimonials)[0];
 }) {
   return (
-    <div className="flex-shrink-0 w-[350px] p-6 bg-white rounded-3xl shadow-sm hover:shadow-lg transition-shadow">
+    <div className="flex-shrink-0 w-[360px] p-6 bg-white rounded-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow duration-300">
       <div className="flex items-center gap-3 mb-4">
-        <div className="relative w-12 h-12 rounded-full overflow-hidden">
+        <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-[var(--primary)]/10">
           <Image
             src={testimonial.image}
             alt={testimonial.name}
             fill
             className="object-cover"
+            sizes="44px"
           />
         </div>
         <div>
-          <p className="font-bold text-sm">{testimonial.name}</p>
-          <p className="text-xs text-[var(--primary)] font-medium">
+          <p className="font-bold text-[14px] text-[var(--foreground)]">{testimonial.name}</p>
+          <p className="text-[12px] text-[var(--primary)] font-bold">
             {testimonial.program}
           </p>
         </div>
-        <div className="ml-auto flex gap-0.5">
+        <div className="ml-auto flex gap-[2px]">
           {Array.from({ length: testimonial.rating }).map((_, i) => (
-            <span key={i} className="text-yellow-400 text-sm">
+            <span key={i} className="text-amber-400 text-[14px]">
               ★
             </span>
           ))}
         </div>
       </div>
       <p
-        className="text-sm text-[var(--foreground)]/70 leading-relaxed italic"
+        className="text-[14px] text-[var(--foreground)]/65 leading-[1.65] italic font-medium"
         style={{ fontFamily: "var(--font-accent)" }}
       >
         &ldquo;{testimonial.text}&rdquo;

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import BenefitsTicker from "@/components/BenefitsTicker";
 import ServiceSection from "@/components/ServiceSection";
 import WhyTrimora from "@/components/WhyTrimora";
 import Doctors from "@/components/Doctors";
@@ -163,6 +164,7 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
+      <BenefitsTicker />
       {services.map((service) => (
         <ServiceSection key={service.id} {...service} />
       ))}

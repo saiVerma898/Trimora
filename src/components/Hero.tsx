@@ -3,144 +3,141 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const badges = [
-  { icon: "🩺", label: "Licensed Providers" },
-  { icon: "💻", label: "100% Online" },
-  { icon: "💰", label: "Clear Pricing" },
-  { icon: "📦", label: "Shipped to Door" },
+const serviceCards = [
+  {
+    name: "Weight Loss",
+    image: "/images/card-weightloss.png",
+    href: "#weight-loss",
+    bg: "#d6f2da",
+  },
+  {
+    name: "Peptides & Longevity",
+    image: "/images/card-peptides.png",
+    href: "#peptides",
+    bg: "#e5f2f2",
+  },
+  {
+    name: "Men's Health",
+    image: "/images/card-mens.png",
+    href: "#mens-health",
+    bg: "#f2ebe1",
+  },
+  {
+    name: "Women's Health",
+    image: "/images/card-womens.png",
+    href: "#womens-health",
+    bg: "#ffe8f4",
+  },
+  {
+    name: "Weight Loss",
+    image: "/images/card-weightloss.png",
+    href: "#weight-loss",
+    bg: "#d6f2da",
+  },
+  {
+    name: "Peptides & Longevity",
+    image: "/images/card-peptides.png",
+    href: "#peptides",
+    bg: "#e5f2f2",
+  },
 ];
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-gradient-to-b from-[#d6f2da]/40 to-[var(--background)]">
-      {/* Decorative background circles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-[var(--primary)]/5"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.15, 1], rotate: [0, -3, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] rounded-full bg-[var(--frozen)]/10"
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <div className="text-center md:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-semibold mb-6"
-            >
-              <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" />
-              Now Accepting New Patients
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              Join 500,000+{" "}
-              <span className="text-[var(--primary)]">Trimora</span> patients
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-6 text-lg md:text-xl text-[var(--foreground)]/60 max-w-lg mx-auto md:mx-0"
-            >
-              Healthcare, redefined for real life. Personalized treatments
-              delivered to your door by licensed providers.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
-            >
-              <a
-                href="#get-started"
-                className="px-8 py-4 rounded-full bg-[var(--primary)] text-white font-semibold text-lg hover:bg-[var(--primary)]/90 transition-all hover:shadow-xl hover:shadow-[var(--primary)]/20 hover:-translate-y-0.5"
-              >
-                Get Started
-              </a>
-              <a
-                href="#why-trimora"
-                className="px-8 py-4 rounded-full border-2 border-[var(--foreground)]/10 text-[var(--foreground)] font-semibold text-lg hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
-              >
-                Learn More
-              </a>
-            </motion.div>
-
-            {/* Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4"
-            >
-              {badges.map((badge, i) => (
-                <motion.div
-                  key={badge.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 1 + i * 0.1 }}
-                  className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/80 shadow-sm"
-                >
-                  <span className="text-2xl">{badge.icon}</span>
-                  <span className="text-xs font-semibold text-[var(--foreground)]/70">
-                    {badge.label}
-                  </span>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Right image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative hidden md:block"
+    <section className="relative bg-gradient-to-b from-[#1a4d35] via-[#1f5c3f] to-[#2e936f] overflow-hidden">
+      {/* Main hero content */}
+      <div className="relative pt-[140px] pb-[50px] md:pt-[160px] md:pb-[60px]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
+          {/* Subheading */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-white/70 text-[15px] md:text-[16px] font-medium mb-6 tracking-[0.01em]"
           >
-            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/hero-doctor.png"
-                alt="Trimora Healthcare"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-            {/* Floating card */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3"
-            >
-              <div className="w-12 h-12 rounded-full bg-[var(--primary)]/10 flex items-center justify-center">
-                <span className="text-[var(--primary)] text-xl">✓</span>
-              </div>
-              <div>
-                <p className="font-bold text-sm">Board Certified</p>
-                <p className="text-xs text-[var(--foreground)]/50">
-                  All providers licensed
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
+            Join <span className="font-bold text-white">500,000+</span> Trimora patients
+          </motion.p>
+
+          {/* Main headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-[42px] sm:text-[56px] md:text-[72px] lg:text-[86px] font-extrabold leading-[1.02] tracking-[-0.04em] text-white mb-7"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Healthcare,
+            <br />
+            <span className="text-[#7dd4a8]">redefined</span> for real life.
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="text-white/65 text-[16px] md:text-[18px] leading-[1.65] max-w-[620px] mx-auto font-medium"
+          >
+            We provide medical care online—simple, direct, and led by licensed
+            providers. No waiting rooms. No unnecessary steps. Just care that works.
+          </motion.p>
         </div>
       </div>
+
+      {/* Service cards carousel */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.65 }}
+        className="relative pb-[60px] md:pb-[80px]"
+      >
+        {/* Large TRIMORA watermark behind cards */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+          <span
+            className="text-[140px] md:text-[220px] lg:text-[280px] font-extrabold text-white/[0.04] tracking-[-0.05em] whitespace-nowrap select-none"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            TRIMORA
+          </span>
+        </div>
+
+        <div className="relative overflow-hidden">
+          <motion.div
+            animate={{ x: [0, -1200] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="flex gap-4 md:gap-5 pl-6 lg:pl-12"
+          >
+            {[...serviceCards, ...serviceCards].map((card, i) => (
+              <a
+                key={i}
+                href={card.href}
+                className="flex-shrink-0 group"
+              >
+                <div
+                  className="w-[220px] md:w-[260px] h-[240px] md:h-[280px] rounded-[20px] overflow-hidden relative mb-3"
+                  style={{ backgroundColor: card.bg }}
+                >
+                  <Image
+                    src={card.image}
+                    alt={card.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="260px"
+                  />
+                </div>
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-white text-[15px] md:text-[16px] font-bold">
+                    {card.name}
+                  </span>
+                  <span className="text-white/60 text-[18px] group-hover:translate-x-1 transition-transform">
+                    →
+                  </span>
+                </div>
+              </a>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
   );
 }

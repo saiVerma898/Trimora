@@ -270,7 +270,8 @@ export default function IntakePage() {
     const updated = { ...formData, ...data };
     setFormData(updated);
     if (step >= TOTAL_STEPS - 1) {
-      setDone(true);
+      window.location.href = "/intake/approved";
+      return;
     } else {
       setStep(step + 1);
     }

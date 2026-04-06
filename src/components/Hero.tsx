@@ -66,9 +66,9 @@ export default function Hero() {
             className="text-[42px] sm:text-[56px] md:text-[72px] lg:text-[86px] font-extrabold leading-[1.02] tracking-[-0.04em] text-white mb-7"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            Healthcare,
+            Your health,
             <br />
-            <span className="text-[#7dd4a8]">redefined</span> for real life.
+            <span className="text-[#7dd4a8]">reimagined</span> for the modern world.
           </motion.h1>
 
           {/* Subtitle */}

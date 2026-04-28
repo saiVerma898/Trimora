@@ -266,6 +266,109 @@ function StatsSection() {
   );
 }
 
+/* ─── Metabolism Section ─── */
+function Metabolism() {
+  return (
+    <section className="py-[80px] bg-[#fcf9f7]">
+      <div className="max-w-[1100px] mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative aspect-[4/5] rounded-[24px] overflow-hidden shadow-sm"
+          >
+            <Image src="/images/funnel/metabolism-hero.png" alt="Metabolic health essentials" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 90vw" />
+          </motion.div>
+          <div>
+            <p className="text-[12px] font-bold text-[#c6a673] uppercase tracking-[0.12em] mb-3">Metabolic Science</p>
+            <h2 className="text-[28px] md:text-[40px] font-extrabold tracking-[-0.025em] leading-[1.1] text-[#242220] mb-5" style={{ fontFamily: "var(--font-accent)" }}>
+              We will fix your <span className="text-[#2e936f]">broken metabolism.</span>
+            </h2>
+            <p className="text-[16px] text-[#242220]/55 mb-8 font-medium leading-[1.7]">
+              Traditional diets don&rsquo;t work because nearly 70% of weight is genetically determined. With GLP-1 medication, you work <strong className="text-[#242220]">with</strong> your body rather than against it — regulating appetite, blood sugar, and metabolism for lasting results.
+            </p>
+            <a onClick={() => trackCta("metabolism_section")} href={INTAKE_URL} className="inline-block px-9 py-3.5 rounded-full bg-[#2e936f] text-white font-bold text-[15px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
+              Get Started
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 24/7 Support Section ─── */
+function SupportSection() {
+  return (
+    <section className="py-[80px] bg-[#f5f0e8]">
+      <div className="max-w-[1100px] mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="lg:order-2">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative aspect-[4/5] rounded-[24px] overflow-hidden shadow-sm"
+            >
+              <Image src="/images/funnel/support-chat.png" alt="24/7 care support" fill className="object-cover" sizes="(min-width: 1024px) 50vw, 90vw" />
+            </motion.div>
+          </div>
+          <div className="lg:order-1">
+            <p className="text-[12px] font-bold text-[#2e936f] uppercase tracking-[0.12em] mb-3">Always-on care</p>
+            <h2 className="text-[28px] md:text-[40px] font-extrabold tracking-[-0.025em] leading-[1.1] text-[#242220] mb-5" style={{ fontFamily: "var(--font-accent)" }}>
+              Unlimited 24/7 support, <span className="text-[#2e936f]">included.</span>
+            </h2>
+            <p className="text-[16px] text-[#242220]/55 mb-6 font-medium leading-[1.7]">
+              Trimora gives you 24/7 access to a dedicated team of care specialists, so you have the guidance you need to stay on track. Message anytime, no appointments needed.
+            </p>
+            <ul className="space-y-2.5 mb-8">
+              {[
+                "Real human responses, not bots",
+                "Direct messaging with your provider",
+                "Medication and dosing questions answered",
+                "Weekly nutrition + wellness check-ins",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <div className="w-[22px] h-[22px] rounded-full bg-[#2e936f] flex items-center justify-center flex-shrink-0">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                  </div>
+                  <span className="text-[14px] text-[#242220]/75 font-medium">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <a onClick={() => trackCta("support_section")} href={INTAKE_URL} className="inline-block px-9 py-3.5 rounded-full bg-[#2e936f] text-white font-bold text-[15px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
+              Get Started
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Doctors Strip ─── */
+function DoctorsStrip() {
+  return (
+    <section className="py-[64px] bg-[#fcf9f7]">
+      <div className="max-w-[1100px] mx-auto px-6 text-center">
+        <p className="text-[12px] font-bold text-[#c6a673] uppercase tracking-[0.12em] mb-3">Doctor-led care</p>
+        <h2 className="text-[26px] md:text-[34px] font-extrabold tracking-[-0.025em] leading-[1.1] text-[#242220] mb-4" style={{ fontFamily: "var(--font-accent)" }}>
+          Care from <span className="text-[#2e936f]">licensed physicians</span>
+        </h2>
+        <p className="text-[15px] text-[#242220]/55 max-w-[560px] mx-auto mb-8 font-medium leading-[1.6]">
+          Every Trimora plan is reviewed and prescribed by board-certified clinicians. No nurse practitioners running your case alone — real doctors, every step of the way.
+        </p>
+        <div className="relative aspect-[16/9] max-w-[760px] mx-auto rounded-[20px] overflow-hidden shadow-sm">
+          <Image src="/images/funnel/doctors-team.png" alt="Trimora medical team" fill className="object-cover" sizes="(min-width: 1024px) 760px, 90vw" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Journey / How It Works ─── */
 function Journey() {
   const steps = [
@@ -319,12 +422,12 @@ function Journey() {
 /* ─── Reviews ─── */
 function Reviews() {
   const reviews = [
-    { name: "Sarah K.", text: "The care team was incredibly supportive. I lost 34 lbs in just 4 months and have never felt better!", lost: "Lost 34 lbs" },
-    { name: "Mike D.", text: "Very easy and convenient. The medication just works. I'm down 28 lbs and my energy levels are through the roof.", lost: "Lost 28 lbs" },
-    { name: "Jennifer L.", text: "I was skeptical but the results speak for themselves. The doctors are knowledgeable and the process is seamless.", lost: "Lost 42 lbs" },
-    { name: "Carlos R.", text: "The weight vanished! No crazy diets, no hours of cardio. This is how weight loss should be.", lost: "Lost 31 lbs" },
-    { name: "Patricia M.", text: "Everyone I have come in contact with has been so kind and helpful! The 24/7 support is a game changer.", lost: "Lost 25 lbs" },
-    { name: "David W.", text: "I was ready to give up on losing weight. Trimora changed everything. Best investment in my health ever.", lost: "Lost 47 lbs" },
+    { name: "Sarah K.", avatar: "/images/avatars/sarah.png", text: "The care team was incredibly supportive. I lost 34 lbs in just 4 months and have never felt better!", lost: "Lost 34 lbs" },
+    { name: "Mike D.", avatar: "/images/avatars/mike.png", text: "Very easy and convenient. The medication just works. I'm down 28 lbs and my energy levels are through the roof.", lost: "Lost 28 lbs" },
+    { name: "Jennifer L.", avatar: "/images/avatars/jennifer.png", text: "I was skeptical but the results speak for themselves. The doctors are knowledgeable and the process is seamless.", lost: "Lost 42 lbs" },
+    { name: "Carlos R.", avatar: "/images/avatars/carlos.png", text: "The weight vanished! No crazy diets, no hours of cardio. This is how weight loss should be.", lost: "Lost 31 lbs" },
+    { name: "Patricia M.", avatar: "/images/avatars/patricia.png", text: "Everyone I have come in contact with has been so kind and helpful! The 24/7 support is a game changer.", lost: "Lost 25 lbs" },
+    { name: "David W.", avatar: "/images/avatars/david.png", text: "I was ready to give up on losing weight. Trimora changed everything. Best investment in my health ever.", lost: "Lost 47 lbs" },
   ];
   return (
     <section id="reviews" className="py-[80px] bg-[#f2ebe1] overflow-hidden">
@@ -338,7 +441,9 @@ function Reviews() {
           {[...reviews, ...reviews].map((r, i) => (
             <div key={i} className="flex-shrink-0 w-[340px] bg-white rounded-[20px] p-7 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-[#c6a673]/20 flex items-center justify-center text-[#c6a673] font-bold text-[14px]">{r.name[0]}</div>
+                <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                  <Image src={r.avatar} alt={r.name} fill className="object-cover" sizes="40px" />
+                </div>
                 <div>
                   <p className="font-bold text-[14px] text-[#242220]">{r.name}</p>
                   <p className="text-[12px] text-[#2e936f] font-bold">{r.lost}</p>
@@ -489,8 +594,11 @@ export default function FunnelPage() {
       <Products />
       <QuotesSection />
       <WeightCalculator />
+      <Metabolism />
       <StatsSection />
+      <SupportSection />
       <Journey />
+      <DoctorsStrip />
       <Reviews />
       <FAQ />
       <Guarantee />

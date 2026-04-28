@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { trackEvent } from "@/lib/analytics";
 
 /* ─────── Countdown Timer Hook ─────── */
 function useCountdown(initialMinutes: number) {
@@ -38,13 +38,55 @@ export default function ApprovedPage() {
   const [selectedMed, setSelectedMed] = useState<"semaglutide" | "tirzepatide">("semaglutide");
   const [medForm, setMedForm] = useState<"injection" | "tablets">("injection");
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
   const price = selectedMed === "semaglutide" ? (medForm === "injection" ? 149 : 249) : (medForm === "injection" ? 199 : 299);
   const originalPrice = selectedMed === "semaglutide" ? 299 : 399;
   const savings = originalPrice - price;
 
-  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Track view on mount
+  useEffect(() => {
+    trackEvent("approved_page_viewed");
+  }, []);
+
+  // Track medication selection changes
+  useEffect(() => {
+    trackEvent("medication_selected", { medication: selectedMed, form: medForm, price });
+  }, [selectedMed, medForm, price]);
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    trackEvent("checkout_cta_clicked", { medication: selectedMed, form: medForm, price });
+  };
+
+  const handleCheckout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setLoading(true);
+    trackEvent("checkout_initiated", { medication: selectedMed, form: medForm, price, email });
+
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ medication: selectedMed, form: medForm, email }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Could not create checkout session");
+      }
+      // Redirect to Stripe-hosted checkout
+      window.location.href = data.url;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      setErrorMsg(message);
+      trackEvent("checkout_error", { error: message });
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="bg-[#f5f0e8] min-h-screen" style={{ fontFamily: "'Red Hat Text', sans-serif" }}>
@@ -421,58 +463,47 @@ export default function ApprovedPage() {
               {selectedMed === "semaglutide" ? "Semaglutide" : "Tirzepatide"} — {medForm} — <strong className="text-[#2e936f]">${price}/first month</strong>
             </p>
 
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+            <form onSubmit={handleCheckout} className="space-y-4">
               <div>
-                <label className="block text-[12px] font-bold text-[#242220]/45 uppercase tracking-[0.05em] mb-1.5">Full Name</label>
-                <input type="text" placeholder="Jane Smith" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[12px] font-bold text-[#242220]/45 uppercase tracking-[0.05em] mb-1.5">Email</label>
-                  <input type="email" placeholder="jane@email.com" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                </div>
-                <div>
-                  <label className="block text-[12px] font-bold text-[#242220]/45 uppercase tracking-[0.05em] mb-1.5">Phone</label>
-                  <input type="tel" placeholder="(555) 123-4567" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                </div>
-              </div>
-
-              <div className="border-t border-black/[0.05] pt-4 mt-4">
-                <p className="text-[12px] font-bold text-[#242220]/45 uppercase tracking-[0.05em] mb-3">Shipping Address</p>
-                <div className="space-y-3">
-                  <input type="text" placeholder="Street address" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                  <div className="grid grid-cols-3 gap-3">
-                    <input type="text" placeholder="City" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                    <select className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7] appearance-none">
-                      <option>State</option>
-                      {["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"].map(s => <option key={s}>{s}</option>)}
-                    </select>
-                    <input type="text" placeholder="ZIP" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                  </div>
-                </div>
+                <label className="block text-[12px] font-bold text-[#242220]/45 uppercase tracking-[0.05em] mb-1.5">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@email.com"
+                  className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]"
+                />
+                <p className="text-[11px] text-[#242220]/40 mt-2 font-medium">
+                  You&rsquo;ll enter your card and shipping details on the next secure step.
+                </p>
               </div>
 
-              <div className="border-t border-black/[0.05] pt-4 mt-4">
-                <p className="text-[12px] font-bold text-[#242220]/45 uppercase tracking-[0.05em] mb-3">Payment</p>
-                <div className="space-y-3">
-                  <input type="text" placeholder="Card number" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                  <div className="grid grid-cols-3 gap-3">
-                    <select className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7] appearance-none">
-                      <option>Month</option>
-                      {Array.from({ length: 12 }, (_, i) => <option key={i}>{String(i + 1).padStart(2, "0")}</option>)}
-                    </select>
-                    <select className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7] appearance-none">
-                      <option>Year</option>
-                      {Array.from({ length: 8 }, (_, i) => <option key={i}>{2025 + i}</option>)}
-                    </select>
-                    <input type="text" placeholder="CVV" className="w-full py-3.5 px-4 rounded-[10px] border border-black/[0.08] text-[15px] font-medium text-[#242220] focus:outline-none focus:border-[#2e936f] focus:ring-2 focus:ring-[#2e936f]/15 transition-all bg-[#faf9f7]" />
-                  </div>
+              {errorMsg && (
+                <div className="rounded-[10px] bg-red-50 border border-red-100 p-3">
+                  <p className="text-[13px] text-red-700 font-medium">{errorMsg}</p>
                 </div>
-              </div>
+              )}
 
-              <button type="submit" className="w-full mt-4 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] uppercase tracking-[0.03em] hover:bg-[#257a5c] transition-all hover:shadow-lg">
-                Continue — ${price}
+              <button
+                type="submit"
+                disabled={loading || !email}
+                className="w-full mt-2 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] uppercase tracking-[0.03em] hover:bg-[#257a5c] transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeLinecap="round" strokeDasharray="32" strokeDashoffset="8" />
+                    </svg>
+                    Redirecting…
+                  </>
+                ) : (
+                  <>Continue to secure checkout — ${price}</>
+                )}
               </button>
+              <p className="text-center text-[11px] text-[#242220]/40 font-medium">
+                Powered by Stripe &bull; Cancel anytime
+              </p>
             </form>
 
             {/* Trust badges */}

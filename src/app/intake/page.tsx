@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackEvent } from "@/lib/analytics";
 
 interface StepProps {
   onNext: (data: Record<string, string>) => void;
@@ -266,17 +267,32 @@ export default function IntakePage() {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 
+  // Track intake start
+  useEffect(() => {
+    trackEvent("intake_started");
+  }, []);
+
+  // Track step views
+  useEffect(() => {
+    trackEvent("intake_step_viewed", { step: step + 1, total: TOTAL_STEPS });
+  }, [step]);
+
   const handleNext = (data: Record<string, string>) => {
     const updated = { ...formData, ...data };
     setFormData(updated);
+    trackEvent("intake_step_completed", { step: step + 1, fields: Object.keys(data) });
     if (step >= TOTAL_STEPS - 1) {
+      trackEvent("intake_completed", { ...updated });
       window.location.href = "/intake/approved";
       return;
     } else {
       setStep(step + 1);
     }
   };
-  const handleBack = () => setStep(Math.max(0, step - 1));
+  const handleBack = () => {
+    trackEvent("intake_step_back", { from_step: step + 1 });
+    setStep(Math.max(0, step - 1));
+  };
 
   const CurrentStep = done ? StepSuccess : STEPS[step];
   const progress = done ? 100 : ((step + 1) / TOTAL_STEPS) * 100;

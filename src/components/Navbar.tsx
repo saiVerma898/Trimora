@@ -65,7 +65,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center">
             <a
-              href="#get-started"
+              href="/funnel"
               className={`px-7 py-2.5 rounded-full text-[14px] font-bold tracking-[-0.01em] transition-all duration-300 ${
                 scrolled
                   ? "bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)]"
@@ -125,7 +125,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#get-started"
+                href="/funnel"
                 onClick={() => setMobileOpen(false)}
                 className="mt-3 px-7 py-3.5 rounded-full bg-[var(--primary)] text-white text-[15px] font-bold text-center"
               >

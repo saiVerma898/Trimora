@@ -1,11 +1,15 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 const INTAKE_URL = "/intake";
+
+function trackCta(location: string) {
+  trackEvent("funnel_cta_clicked", { location });
+}
 
 /* ─── Sticky Navbar ─── */
 function FunnelNav() {
@@ -26,7 +30,7 @@ function FunnelNav() {
         <span className="text-[22px] font-extrabold tracking-[-0.03em]" style={{ fontFamily: "var(--font-heading)" }}>
           Trimora
         </span>
-        <a href={INTAKE_URL} className="px-6 py-2.5 rounded-full bg-[#2e936f] text-white text-[13px] font-bold tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
+        <a onClick={() => trackCta("sticky_nav")} href={INTAKE_URL} className="px-6 py-2.5 rounded-full bg-[#2e936f] text-white text-[13px] font-bold tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
           Get Approved
         </a>
       </div>
@@ -61,7 +65,7 @@ function FunnelHero() {
         <span className="text-[24px] font-extrabold tracking-[-0.03em]" style={{ fontFamily: "var(--font-heading)" }}>
           Trimora
         </span>
-        <a href={INTAKE_URL} className="px-6 py-2.5 rounded-full bg-[#2e936f] text-white text-[13px] font-bold tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
+        <a onClick={() => trackCta("hero_inline_nav")} href={INTAKE_URL} className="px-6 py-2.5 rounded-full bg-[#2e936f] text-white text-[13px] font-bold tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
           Get Started
         </a>
       </div>
@@ -100,6 +104,7 @@ function FunnelHero() {
             </motion.div>
 
             <motion.a initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+              onClick={() => trackCta("hero_am_i_qualified")}
               href={INTAKE_URL}
               className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] tracking-[-0.01em] hover:bg-[#257a5c] transition-all hover:shadow-[0_8px_30px_rgba(46,147,111,0.3)]"
             >
@@ -158,7 +163,7 @@ function Products() {
                 <h3 className="text-[20px] font-bold text-[#242220] mb-1">{p.name}</h3>
                 <p className="text-[#c6a673] font-bold text-[16px] mb-1">{p.price}</p>
                 <p className="text-[14px] text-[#242220]/50 mb-5 font-medium">{p.desc}</p>
-                <a href={INTAKE_URL} className="block text-center py-3 rounded-full bg-[#2e936f] text-white font-bold text-[13px] tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
+                <a onClick={() => trackCta(`product_${p.name}`)} href={INTAKE_URL} className="block text-center py-3 rounded-full bg-[#2e936f] text-white font-bold text-[13px] tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
                   Get Started
                 </a>
               </div>
@@ -219,7 +224,7 @@ function WeightCalculator() {
             </p>
           </div>
         </div>
-        <a href={INTAKE_URL} className="inline-block mt-8 px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
+        <a onClick={() => trackCta("weight_calculator")} href={INTAKE_URL} className="inline-block mt-8 px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
           Get Started
         </a>
       </div>
@@ -302,7 +307,7 @@ function Journey() {
           </div>
         </div>
         <div className="text-center mt-12">
-          <a href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
+          <a onClick={() => trackCta("journey_section")} href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
             Get Started
           </a>
         </div>
@@ -349,7 +354,7 @@ function Reviews() {
           ))}
         </motion.div>
         <div className="text-center mt-10">
-          <a href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all">
+          <a onClick={() => trackCta("reviews_section")} href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all">
             I&rsquo;m Ready, Let&rsquo;s Go
           </a>
         </div>
@@ -406,7 +411,7 @@ function Guarantee() {
         <p className="text-[16px] text-[#242220]/55 mb-8 font-medium leading-[1.6]">
           With over 500,000+ patients, we&rsquo;re confident you will reach your goal. If the medication doesn&rsquo;t work for you, we&rsquo;ll make it right.
         </p>
-        <a href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#c6a673] text-white font-bold text-[16px] hover:bg-[#b8965f] transition-all hover:shadow-lg">
+        <a onClick={() => trackCta("guarantee_section")} href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#c6a673] text-white font-bold text-[16px] hover:bg-[#b8965f] transition-all hover:shadow-lg">
           Continue with Confidence
         </a>
       </div>
@@ -425,14 +430,14 @@ function WeightGoal() {
         </h2>
         <div className="space-y-3 mb-8">
           {goals.map((goal) => (
-            <a key={goal} href={INTAKE_URL}
+            <a key={goal} onClick={() => { trackEvent("weight_goal_selected", { goal }); trackCta("weight_goal"); }} href={INTAKE_URL}
               className="block w-full py-4 px-6 rounded-[14px] bg-white text-[#242220] text-[16px] font-semibold text-left hover:bg-[#2e936f] hover:text-white transition-all shadow-sm hover:shadow-lg"
             >
               {goal}
             </a>
           ))}
         </div>
-        <a href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all">
+        <a onClick={() => trackCta("weight_goal_continue")} href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all">
           Continue
         </a>
       </div>

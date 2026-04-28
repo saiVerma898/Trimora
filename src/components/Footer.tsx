@@ -19,7 +19,7 @@ const footerLinks = {
     { label: "Press", href: "#" },
   ],
   Support: [
-    { label: "Contact Us", href: "#get-started" },
+    { label: "Contact Us", href: "/funnel" },
     { label: "FAQs", href: "#" },
     { label: "Privacy Policy", href: "#" },
     { label: "Terms of Service", href: "#" },

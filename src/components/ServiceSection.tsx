@@ -31,7 +31,7 @@ export default function ServiceSection({
   bgColor,
   accentColor,
   ctaText,
-  ctaHref = "#get-started",
+  ctaHref = "/funnel",
   comingSoon = false,
   reversed = false,
 }: ServiceSectionProps) {

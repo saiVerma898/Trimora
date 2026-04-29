@@ -367,9 +367,9 @@ export default function ApprovedPage() {
         </h2>
         <div className="space-y-4">
           {[
-            { name: "Katie R.", avatar: "/images/avatars/katie.png", quote: "Trimora saved my life. I reached my goal weight in just 5 months. The support team was incredible.", lost: "5 months to goal" },
-            { name: "Rachel G.", avatar: "/images/avatars/rachel.png", quote: "The world looks at me differently now. I lost 26 lbs in 3 months and I've never been happier.", lost: "Lost 26 lbs" },
-            { name: "Shannon B.", avatar: "/images/avatars/shannon.png", quote: "I feel like myself again. I lost 45 lbs of baby weight and I have more energy than ever.", lost: "Lost 45 lbs" },
+            { name: "Katie R.", avatar: "/images/avatars/avatar-katie.png", quote: "Trimora saved my life. I reached my goal weight in just 5 months. The support team was incredible.", lost: "5 months to goal" },
+            { name: "Rachel G.", avatar: "/images/avatars/avatar-rachel.png", quote: "The world looks at me differently now. I lost 26 lbs in 3 months and I've never been happier.", lost: "Lost 26 lbs" },
+            { name: "Shannon B.", avatar: "/images/avatars/avatar-shannon.png", quote: "I feel like myself again. I lost 45 lbs of baby weight and I have more energy than ever.", lost: "Lost 45 lbs" },
           ].map((r) => (
             <div key={r.name} className="bg-white rounded-[16px] p-5 shadow-sm">
               <div className="flex items-center gap-3 mb-3">

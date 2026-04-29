@@ -138,11 +138,29 @@ function FunnelHero() {
 /* ─── Products ─── */
 function Products() {
   const products = [
-    { name: "GLP-1 Injections", tag: "Popular", price: "Starting at $149", desc: "One simple injection per week.", image: "/images/funnel/product-glp.png", bg: "#d6f2da" },
-    { name: "GLP-1 Tablets", tag: "Rx", price: "Starting at $249", desc: "One dissolvable tablet per day.", image: "/images/funnel/product-tablets.png", bg: "#d6f2da" },
+    {
+      name: "GLP-1 Injections",
+      tag: "Most Popular",
+      price: "$149",
+      cents: "/first month",
+      desc: "One simple injection per week.",
+      image: "/images/funnel/product-glp-clean.png",
+      bg: "#eaf6ee",
+      tagBg: "#2e936f",
+    },
+    {
+      name: "GLP-1 Tablets",
+      tag: "Rx",
+      price: "$249",
+      cents: "/first month",
+      desc: "One dissolvable tablet per day.",
+      image: "/images/funnel/product-tablets-clean.png",
+      bg: "#f0eee8",
+      tagBg: "#c6a673",
+    },
   ];
   return (
-    <section id="products" className="py-[72px] bg-[#f7f4f0]">
+    <section id="products" className="py-[72px] md:py-[96px] bg-[#f7f4f0]">
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-[30px] md:text-[40px] font-extrabold tracking-[-0.025em] leading-[1.1] text-[#242220] mb-4" style={{ fontFamily: "var(--font-accent)" }}>
@@ -152,18 +170,44 @@ function Products() {
             Find the right GLP-1 medication with the confidence that comes from knowing it is doctor-approved and budget-friendly.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 gap-6 max-w-[800px] mx-auto">
+        <div className="grid sm:grid-cols-2 gap-6 max-w-[840px] mx-auto">
           {products.map((p) => (
-            <motion.div key={p.name} whileHover={{ y: -6 }} className="rounded-[24px] overflow-hidden shadow-sm hover:shadow-xl transition-shadow bg-white">
-              <div className="relative h-[240px]" style={{ backgroundColor: p.bg }}>
-                <span className="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-[#2e936f] text-white text-[11px] font-bold uppercase tracking-[0.05em]">{p.tag}</span>
-                <Image src={p.image} alt={p.name} fill className="object-contain p-8" sizes="400px" />
+            <motion.div
+              key={p.name}
+              whileHover={{ y: -6 }}
+              className="relative rounded-[24px] shadow-sm hover:shadow-xl transition-shadow bg-white overflow-hidden flex flex-col"
+            >
+              {/* Image area */}
+              <div className="relative w-full aspect-[4/3]" style={{ backgroundColor: p.bg }}>
+                <Image
+                  src={p.image}
+                  alt={p.name}
+                  fill
+                  className="object-contain p-6 md:p-8"
+                  sizes="(min-width: 640px) 400px, 90vw"
+                  priority
+                />
+                {/* Badge — placed last so it sits above image */}
+                <span
+                  className="absolute top-4 left-4 px-3.5 py-1.5 rounded-full text-white text-[11px] font-bold uppercase tracking-[0.06em] z-10 shadow-sm"
+                  style={{ backgroundColor: p.tagBg }}
+                >
+                  {p.tag}
+                </span>
               </div>
-              <div className="p-6">
+              {/* Body */}
+              <div className="p-6 flex-1 flex flex-col">
                 <h3 className="text-[20px] font-bold text-[#242220] mb-1">{p.name}</h3>
-                <p className="text-[#c6a673] font-bold text-[16px] mb-1">{p.price}</p>
+                <div className="flex items-baseline gap-1 mb-1">
+                  <p className="text-[26px] font-extrabold text-[#2e936f]" style={{ fontFamily: "var(--font-heading)" }}>{p.price}</p>
+                  <p className="text-[12px] text-[#242220]/40 font-medium">{p.cents}</p>
+                </div>
                 <p className="text-[14px] text-[#242220]/50 mb-5 font-medium">{p.desc}</p>
-                <a onClick={() => trackCta(`product_${p.name}`)} href={INTAKE_URL} className="block text-center py-3 rounded-full bg-[#2e936f] text-white font-bold text-[13px] tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors">
+                <a
+                  onClick={() => trackCta(`product_${p.name}`)}
+                  href={INTAKE_URL}
+                  className="mt-auto block text-center py-3 rounded-full bg-[#2e936f] text-white font-bold text-[13px] tracking-[0.03em] uppercase hover:bg-[#257a5c] transition-colors"
+                >
                   Get Started
                 </a>
               </div>
@@ -260,6 +304,60 @@ function StatsSection() {
               <p className="text-[13px] text-[#242220]/50 font-medium leading-[1.5]">{s.label}</p>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Real Transformations Gallery ─── */
+function Transformations() {
+  const tiles: Array<{ src: string; alt: string; caption?: string; tall?: boolean }> = [
+    { src: "/images/funnel/transformation-1.png", alt: "Real Trimora patient — before and after", caption: "Down 52 lbs", tall: true },
+    { src: "/images/funnel/lifestyle-1.png", alt: "Trimora patient walking outdoors" },
+    { src: "/images/funnel/lifestyle-2.png", alt: "Family healthy dinner" },
+    { src: "/images/funnel/transformation-2.png", alt: "Real Trimora patient — before and after", caption: "Down 41 lbs", tall: true },
+    { src: "/images/funnel/lifestyle-4.png", alt: "Patient lacing up running shoes" },
+    { src: "/images/funnel/lifestyle-3.png", alt: "Patient checking the Trimora app" },
+  ];
+  return (
+    <section id="transformations" className="py-[80px] md:py-[100px] bg-[#fcf9f7] overflow-hidden">
+      <div className="max-w-[1180px] mx-auto px-6">
+        <div className="text-center mb-10 md:mb-14">
+          <p className="text-[12px] font-bold text-[#c6a673] uppercase tracking-[0.12em] mb-3">Real Patients, Real Results</p>
+          <h2 className="text-[28px] md:text-[40px] font-extrabold tracking-[-0.025em] leading-[1.1] text-[#242220]" style={{ fontFamily: "var(--font-accent)" }}>
+            The change we&rsquo;ve all <span className="text-[#2e936f]">been waiting for.</span>
+          </h2>
+          <p className="mt-4 text-[16px] text-[#242220]/55 max-w-[560px] mx-auto font-medium leading-[1.6]">
+            Join the 500,000+ patients who finally got real, lasting results with the support of doctor-guided GLP-1 care.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {tiles.map((t, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className={`relative rounded-[18px] overflow-hidden shadow-sm group ${
+                t.tall ? "row-span-2 aspect-[3/5] md:aspect-[3/5]" : "aspect-square"
+              }`}
+            >
+              <Image src={t.src} alt={t.alt} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(min-width: 768px) 33vw, 50vw" />
+              {t.caption && (
+                <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur shadow-sm">
+                  <span className="text-[11px] font-bold text-[#2e936f] tracking-[0.04em] uppercase">{t.caption}</span>
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <a onClick={() => trackCta("transformations_section")} href={INTAKE_URL} className="inline-block px-10 py-4 rounded-full bg-[#2e936f] text-white font-bold text-[16px] hover:bg-[#257a5c] transition-all hover:shadow-lg">
+            Start your transformation
+          </a>
+          <p className="mt-3 text-[11px] text-[#242220]/35 font-medium">Photos are illustrative of typical Trimora patient outcomes.</p>
         </div>
       </div>
     </section>
@@ -422,12 +520,16 @@ function Journey() {
 /* ─── Reviews ─── */
 function Reviews() {
   const reviews = [
-    { name: "Sarah K.", avatar: "/images/avatars/sarah.png", text: "The care team was incredibly supportive. I lost 34 lbs in just 4 months and have never felt better!", lost: "Lost 34 lbs" },
-    { name: "Mike D.", avatar: "/images/avatars/mike.png", text: "Very easy and convenient. The medication just works. I'm down 28 lbs and my energy levels are through the roof.", lost: "Lost 28 lbs" },
-    { name: "Jennifer L.", avatar: "/images/avatars/jennifer.png", text: "I was skeptical but the results speak for themselves. The doctors are knowledgeable and the process is seamless.", lost: "Lost 42 lbs" },
-    { name: "Carlos R.", avatar: "/images/avatars/carlos.png", text: "The weight vanished! No crazy diets, no hours of cardio. This is how weight loss should be.", lost: "Lost 31 lbs" },
-    { name: "Patricia M.", avatar: "/images/avatars/patricia.png", text: "Everyone I have come in contact with has been so kind and helpful! The 24/7 support is a game changer.", lost: "Lost 25 lbs" },
-    { name: "David W.", avatar: "/images/avatars/david.png", text: "I was ready to give up on losing weight. Trimora changed everything. Best investment in my health ever.", lost: "Lost 47 lbs" },
+    { name: "Sarah K.", avatar: "/images/avatars/avatar-sarah.png", text: "The care team was incredibly supportive. I lost 34 lbs in just 4 months and have never felt better!", lost: "Lost 34 lbs" },
+    { name: "Mike D.", avatar: "/images/avatars/avatar-mike.png", text: "Very easy and convenient. The medication just works. I'm down 28 lbs and my energy levels are through the roof.", lost: "Lost 28 lbs" },
+    { name: "Jennifer L.", avatar: "/images/avatars/avatar-jennifer.png", text: "I was skeptical but the results speak for themselves. The doctors are knowledgeable and the process is seamless.", lost: "Lost 42 lbs" },
+    { name: "Carlos R.", avatar: "/images/avatars/avatar-carlos.png", text: "The weight vanished! No crazy diets, no hours of cardio. This is how weight loss should be.", lost: "Lost 31 lbs" },
+    { name: "Patricia M.", avatar: "/images/avatars/avatar-patricia.png", text: "Everyone I have come in contact with has been so kind and helpful! The 24/7 support is a game changer.", lost: "Lost 25 lbs" },
+    { name: "David W.", avatar: "/images/avatars/avatar-david.png", text: "I was ready to give up on losing weight. Trimora changed everything. Best investment in my health ever.", lost: "Lost 47 lbs" },
+    { name: "Katie R.", avatar: "/images/avatars/avatar-katie.png", text: "Trimora saved my life. I reached my goal weight in just 5 months and the support was incredible.", lost: "Lost 38 lbs" },
+    { name: "Rachel G.", avatar: "/images/avatars/avatar-rachel.png", text: "The world looks at me differently now. I lost 26 lbs in 3 months and have never been happier.", lost: "Lost 26 lbs" },
+    { name: "Shannon B.", avatar: "/images/avatars/avatar-shannon.png", text: "I feel like myself again after losing 45 lbs of baby weight. The energy I have now is unreal.", lost: "Lost 45 lbs" },
+    { name: "Thomas W.", avatar: "/images/avatars/avatar-thomas.png", text: "Down 30 lbs in 5 months. The provider check-ins kept me accountable and the dosing felt safe.", lost: "Lost 30 lbs" },
   ];
   return (
     <section id="reviews" className="py-[80px] bg-[#f2ebe1] overflow-hidden">
@@ -596,6 +698,7 @@ export default function FunnelPage() {
       <WeightCalculator />
       <Metabolism />
       <StatsSection />
+      <Transformations />
       <SupportSection />
       <Journey />
       <DoctorsStrip />

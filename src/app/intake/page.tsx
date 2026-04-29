@@ -97,6 +97,32 @@ function Note({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* Reusable hero image card for quiz steps */
+function StepImage({
+  src,
+  alt,
+  ratio = "16/9",
+  rounded = 14,
+}: {
+  src: string;
+  alt: string;
+  ratio?: string;
+  rounded?: number;
+}) {
+  return (
+    <div
+      className="relative w-full overflow-hidden mb-6"
+      style={{
+        aspectRatio: ratio,
+        borderRadius: rounded,
+        border: "1px solid #e3e7e4",
+      }}
+    >
+      <Image src={src} alt={alt} fill className="object-cover" sizes="(min-width: 768px) 700px, 100vw" />
+    </div>
+  );
+}
+
 /* Card buttons (radio/checkbox cards) */
 interface CardOption {
   label: string;
@@ -303,6 +329,7 @@ const steps: StepDef[] = [
     group: "Start",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/hero-trim.png" alt="Confident woman achieving her health goals" ratio="16/10" />
         <H1 accent="without restrictive diets and exercise.">Reach your goal weight fast</H1>
         <Subtitle>
           Let&rsquo;s calculate your BMI to make sure you&rsquo;re a good candidate for medical weight loss.
@@ -333,6 +360,7 @@ const steps: StepDef[] = [
             </div>
           )}
           <H1 accent="Your goal is our goal.">We&rsquo;re in this together.</H1>
+          <StepImage src="/images/quiz/goal-target.png" alt="Setting your weight loss goal" ratio="16/9" />
           <Label>What is your goal weight?</Label>
           <div className="max-w-[420px]">
             <NumberInput value={data.goalWeight} onChange={(v) => set({ goalWeight: v })} placeholder="e.g. 160" min={100} max={400} suffix="lbs" />
@@ -353,6 +381,7 @@ const steps: StepDef[] = [
     group: "Start",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/doctor-friendly.png" alt="A friendly Trimora physician" ratio="16/9" />
         <H1 accent="your unique needs,">Medication can be tailored to</H1>
         <Subtitle>so let&rsquo;s get to know you a little better.</Subtitle>
         <Label>Are you male or female?</Label>
@@ -376,6 +405,7 @@ const steps: StepDef[] = [
     group: "Start",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/fitness-pace.png" alt="Athletic woman lacing running shoes" ratio="16/9" />
         <H1 accent="most important for you.">We can help with all of these, but choose the</H1>
         <Label>Which of these is your priority?</Label>
         <RadioCards
@@ -435,12 +465,8 @@ const steps: StepDef[] = [
         <Subtitle>
           On average, Trimora patients lose over <strong style={{ color: TEXT }}>20% of their body weight</strong>.
         </Subtitle>
-        <div className="rounded-[14px] overflow-hidden mt-2" style={{ border: "1px solid #e3e7e4" }}>
-          <div className="relative aspect-[16/9]">
-            <Image src="/images/funnel/lifestyle-1.png" alt="Real patient lifestyle" fill className="object-cover" sizes="(min-width:768px) 700px, 100vw" />
-          </div>
-        </div>
-        <p className="mt-5 text-[15px] md:text-[16px]" style={{ color: SUBTLE }}>
+        <StepImage src="/images/quiz/science-chart.png" alt="Weight loss progress curve" ratio="16/9" />
+        <p className="mt-1 text-[15px] md:text-[16px]" style={{ color: SUBTLE }}>
           GLP-1 medications are <strong style={{ color: TEXT }}>extremely effective</strong> — offering a strong path
           {data.goalWeight ? <> toward your <strong style={{ color: TEXT }}>{data.goalWeight} lb</strong> goal weight.</> : <>.</>}
         </p>
@@ -456,12 +482,8 @@ const steps: StepDef[] = [
       <>
         <H1 accent="I dropped 28 pounds of fat">It really does work — once it kicked in,</H1>
         <Subtitle>and haven&rsquo;t looked back. Thank you Trimora!</Subtitle>
-        <div className="rounded-[14px] overflow-hidden" style={{ border: "1px solid #e3e7e4" }}>
-          <div className="relative aspect-[4/3]">
-            <Image src="/images/funnel/transformation-1.png" alt="Real Trimora patient transformation" fill className="object-cover" sizes="(min-width:768px) 700px, 100vw" />
-          </div>
-        </div>
-        <p className="mt-5 text-[14px] italic font-light" style={{ color: SUBTLE }}>
+        <StepImage src="/images/funnel/transformation-1.png" alt="Real Trimora patient transformation" ratio="4/3" />
+        <p className="-mt-2 text-[14px] italic font-light" style={{ color: SUBTLE }}>
           <strong style={{ color: TEXT }}>Tania</strong> took control and <strong style={{ color: TEXT }}>doubled her confidence</strong> in only 2 months.
         </p>
       </>
@@ -474,6 +496,7 @@ const steps: StepDef[] = [
     group: "Preliminary",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/motivation.png" alt="Setting intentions" ratio="16/9" />
         <H1 accent="motivation.">Improving your life requires</H1>
         <Label>What is your primary reason for taking weight loss seriously?</Label>
         <RadioCards
@@ -503,6 +526,7 @@ const steps: StepDef[] = [
           <H1 accent={diff ? `${(diff * 0.06).toFixed(1)} to ${(diff * 0.07).toFixed(1)} lbs per week.` : "1.5 to 2 lbs per week."}>
             With medication, you&rsquo;ll lose
           </H1>
+          <StepImage src="/images/quiz/healthy-meal.png" alt="A healthy plated meal" ratio="16/9" />
           <Label>How is that pace for you?</Label>
           <RadioCards
             value={data.pace}
@@ -524,6 +548,7 @@ const steps: StepDef[] = [
     group: "Preliminary",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/sleep.png" alt="Restful morning bedroom" ratio="16/9" />
         <H1 accent="cortisol and efficiency.">How you sleep tells us a lot about your</H1>
         <Label>How is your sleep, overall?</Label>
         <RadioCards
@@ -561,6 +586,7 @@ const steps: StepDef[] = [
       };
       return (
         <>
+          <StepImage src="/images/quiz/medical-clipboard.png" alt="Medical safety review" ratio="16/9" />
           <H1 accent="safe,">GLP-1 is</H1>
           <Subtitle>but these health conditions might prevent you from being prescribed.</Subtitle>
           <Note>Your answers are completely confidential and protected by HIPAA.</Note>
@@ -577,6 +603,7 @@ const steps: StepDef[] = [
     group: "Health",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/scale.png" alt="Bathroom scale" ratio="16/9" />
         <H1 accent="last year?">Has your weight changed in the</H1>
         <RadioCards
           value={data.weightChange}
@@ -601,12 +628,8 @@ const steps: StepDef[] = [
       <>
         <H1 accent="the weight vanished">Being a mom made it so hard, but</H1>
         <Subtitle>with GLP-1 medication.</Subtitle>
-        <div className="rounded-[14px] overflow-hidden" style={{ border: "1px solid #e3e7e4" }}>
-          <div className="relative aspect-[4/3]">
-            <Image src="/images/funnel/transformation-2.png" alt="Real Trimora patient transformation" fill className="object-cover" sizes="(min-width:768px) 700px, 100vw" />
-          </div>
-        </div>
-        <p className="mt-5 text-[14px] italic font-light" style={{ color: SUBTLE }}>
+        <StepImage src="/images/funnel/transformation-2.png" alt="Real Trimora patient transformation" ratio="4/3" />
+        <p className="-mt-2 text-[14px] italic font-light" style={{ color: SUBTLE }}>
           <strong style={{ color: TEXT }}>Daiene</strong> lost <strong style={{ color: TEXT }}>41 lbs</strong> and came off her blood pressure medication.
         </p>
       </>
@@ -619,6 +642,7 @@ const steps: StepDef[] = [
     group: "Details",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/support-chat.png" alt="Care team support chat" ratio="16/9" />
         <H1 accent="state of mind.">Let&rsquo;s better understand your current</H1>
         <Label>How motivated are you to reach your weight goal?</Label>
         <RadioCards
@@ -640,6 +664,7 @@ const steps: StepDef[] = [
     group: "Eligibility",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/doctor-friendly.png" alt="Trimora medical provider" ratio="16/9" />
         <H1>Your medical checkup</H1>
         <Subtitle>
           You are a strong candidate with a <strong style={{ color: ACCENT }}>94% chance</strong> of treatment success if you qualify.
@@ -670,6 +695,7 @@ const steps: StepDef[] = [
     group: "Eligibility",
     render: ({ data, set }) => (
       <>
+        <StepImage src="/images/quiz/handoff-package.png" alt="Discreet medication delivery" ratio="16/9" />
         <H1>
           {data.firstName ? `${data.firstName}, how can we reach you?` : "How can we reach you?"}
         </H1>

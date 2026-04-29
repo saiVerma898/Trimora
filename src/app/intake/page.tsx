@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { trackEvent } from "@/lib/analytics";
+import PressStrip from "@/components/PressStrip";
 
 /* ──────────────────────────────────────────────────────────
    TYPES
@@ -908,6 +909,13 @@ export default function IntakePage() {
           </div>
         </div>
       </header>
+
+      {/* Featured coverage strip — only on first step so it doesn't compete with the progress bar */}
+      {stepIdx === 0 && (
+        <div className="bg-white border-b border-black/[0.04]">
+          <PressStrip bg="#fff" />
+        </div>
+      )}
 
       {/* Progress */}
       <ProgressBar currentGroup={step.group} />

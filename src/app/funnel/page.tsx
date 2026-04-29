@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { trackEvent } from "@/lib/analytics";
+import PressStrip from "@/components/PressStrip";
 
 const INTAKE_URL = "/intake";
 
@@ -693,6 +694,7 @@ export default function FunnelPage() {
       <FunnelNav />
       <PromoBanner />
       <FunnelHero />
+      <PressStrip bg="#fff" />
       <Products />
       <QuotesSection />
       <WeightCalculator />
